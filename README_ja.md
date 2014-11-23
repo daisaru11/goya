@@ -11,7 +11,8 @@ Goyaは[Laravel](http://laravel.com/)のためのシンプルなデータベー�
 スキーマ定義ファイル(Recipeと呼んでいます)を作成します。
 スキーマの記述方法はDBALのドキュメントを参照してください。
 
-	$ cat app/database/recipes/UserTable.php                                                                                                                               	<?php
+	$ cat app/database/recipes/UserTable.php
+	<?php
 	
 	use Dsaru\Goya\Recipe;
 	use Doctrine\DBAL\Schema\Schema;
@@ -41,7 +42,8 @@ Goyaは[Laravel](http://laravel.com/)のためのシンプルなデータベー�
 	
 `goya`コマンドを実行すると、スキーマ定義ファイルを元にSQLを出力します。
 
-	$ php artisan goya                                                                                                                                                          	CREATE TABLE user (id INT UNSIGNED AUTO_INCREMENT NOT NULL, name VARCHAR(32) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, deleted_at DATETIME DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB
+	$ php artisan goya
+	CREATE TABLE user (id INT UNSIGNED AUTO_INCREMENT NOT NULL, name VARCHAR(32) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, deleted_at DATETIME DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB
 
 `goya:cook`コマンドで実際にデータベースへ適用します。
 

@@ -12,7 +12,8 @@ Schema definition files are described in DBAL Schema Representation.
 Create schema definition files (Recipes).  
 For how to describe schemas, see DBAL Docmentations.
 
-	$ cat app/database/recipes/UserTable.php                                                                                                                               	<?php
+	$ cat app/database/recipes/UserTable.php
+	<?php
 	
 	use Dsaru\Goya\Recipe;
 	use Doctrine\DBAL\Schema\Schema;
@@ -42,7 +43,8 @@ There has been no definitions yet in the actual database.
 	
 If you run `goya` command, a SQL is generated from the schema definition files.
 
-	$ php artisan goya                                                                                                                                                          	CREATE TABLE user (id INT UNSIGNED AUTO_INCREMENT NOT NULL, name VARCHAR(32) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, deleted_at DATETIME DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB
+	$ php artisan goya
+	CREATE TABLE user (id INT UNSIGNED AUTO_INCREMENT NOT NULL, name VARCHAR(32) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, deleted_at DATETIME DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB
 
 you may apply it to the actual database with `goya:cook` command.
 
