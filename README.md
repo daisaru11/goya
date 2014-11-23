@@ -75,6 +75,23 @@ Goyaは[Laravel](http://laravel.com/)のためのシンプルなデータベー�
 
 ## Installation ##
 
+`composer.json`にこのパッケージを追加してください。
+
+    "require": {
+        ...,
+        "dsaru/goya": "dev-master"
+    }
+    
+`composer update`でインストールされます。
+
+`app/config/app.php`を開き、サービスプロバイダを追加してください。  
+	
+	'providers' => array(
+	 	..
+		'Dsaru\Goya\GoyaServiceProvider', 
+	),
+
+
 ## Writing Recipes ##
 
 スキーマ定義ファイル(Recipe)は、`app/database/recipes`以下に置いてください。  
