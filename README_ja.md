@@ -1,16 +1,15 @@
 # Goya #
 
-Goya is a simple database schema management tool for [Laravel](http://laravel.com/).
-Goya output diffs between schema definition files and database schemas, apply them to the database.
+Goyaは[Laravel](http://laravel.com/)のためのシンプルなデータベーススキーマ管理ツールです。
+スキーマ定義ファイルとデータベースとの差分を出力し、適用することができます。
 
-To make diff of a schema, Goya uses [Doctrine DBAL](http://www.doctrine-project.org/projects/dbal.html).
-Schema definition files are described in DBAL Schema Representation.
-
+スキーマの差分は[Doctrine DBAL](http://www.doctrine-project.org/projects/dbal.html)を利用して出力しています。
+スキーマ定義ファイルはDBALのスキーマ表現を用いて記述します。
 
 ## Using Goya ##
 
-Create schema definition files (Recipes).  
-For how to describe schemas, see DBAL Docmentations.
+スキーマ定義ファイル(Recipeと呼んでいます)を作成します。
+スキーマの記述方法はDBALのドキュメントを参照してください。
 
 	$ cat app/database/recipes/UserTable.php                                                                                                                               	<?php
 	
@@ -34,17 +33,17 @@ For how to describe schemas, see DBAL Docmentations.
 	
 	}
 	
-There has been no definitions yet in the actual database.
+まだ、実際のデータベースには定義は存在していません。
 
 	$ mysql -uroot yourdb 
 	mysql> show tables;
 	Empty set (0.00 sec)
 	
-If you run `goya` command, a SQL is generated from the schema definition files.
+`goya`コマンドを実行すると、スキーマ定義ファイルを元にSQLを出力します。
 
 	$ php artisan goya                                                                                                                                                          	CREATE TABLE user (id INT UNSIGNED AUTO_INCREMENT NOT NULL, name VARCHAR(32) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, deleted_at DATETIME DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB
 
-you may apply it to the actual database with `goya:cook` command.
+`goya:cook`コマンドで実際にデータベースへ適用します。
 
 	$ php artisan goya:cook
 
@@ -62,28 +61,30 @@ you may apply it to the actual database with `goya:cook` command.
 	5 rows in set (0.00 sec)
 	
 
-Now, add `profile` column definition to the schema definition file.
+スキーマ定義ファイルを修正してみます。`profile`カラムを追加してみます。
+
 
 	$table->addColumn( 'profile',        'string',   ['length' => 1000] );
 
-Run `goya` command again.
+再度、`goya`コマンドを実行します。
 
 	$ php artisan goya
 	ALTER TABLE user ADD profile VARCHAR(1000) NOT NULL
-
 	
+スキーマ定義ファイルとデータベース上のスキーマとの差分を得ることができます。
+
 ## Installation ##
 
-Add this package name to `composer.json`.
+`composer.json`にこのパッケージを追加してください。
 
     "require": {
         ...,
         "dsaru/goya": "dev-master"
     }
     
-Run `composer update`.
+`composer update`でインストールされます。
 
-Open `app/config/app.php`, and add the Service Provider.  
+`app/config/app.php`を開き、サービスプロバイダを追加してください。  
 	
 	'providers' => array(
 	 	..
@@ -93,12 +94,11 @@ Open `app/config/app.php`, and add the Service Provider.
 
 ## Writing Recipes ##
 
-Schema definition files (Recipes) are put in `app/database/recipes`.  
-You may describe multiple table definitions in a single file.
-Or, it may be split into multiple files.
+スキーマ定義ファイル(Recipe)は、`app/database/recipes`以下に置いてください。  
+複数のテーブル定義を、一つのファイルに記述しても良いし、複数のファイルに分割をしても良いです。
 
-Recipe files are need to be named like `[ClassName].php`.
-Create a class which extends `\Dsaru\Goya\Recipe` in the file, and describe database table schemas in `schema` method.
+`app/database/recipes`以下に`[クラス名].php`ファイルを作成してください。  
+その中に`\Dsaru\Goya\Recipe`を継承したクラスを定義し、`schema`メソッドの中にデータベースのスキーマ定義を記述していきます。
 
 
 	class MyTables extends \Dsaru\Goya\Recipe
@@ -108,8 +108,9 @@ Create a class which extends `\Dsaru\Goya\Recipe` in the file, and describe data
 		}
 	}
 	
-When you use multiple recipe files, you may need to control the order of the loading files.  
-Because recipes are loaded in alphabetical order, it will work well if they are named like `001_[ClassName]].php`、`002_[ClassName].php`.
+
+スキーマ定義ファイルを分割した際、読み込まれる順序をコントロールしたい場合があります。
+スキーマ定義ファイルはアルファベット順で読み込まれるので、例えば`001_[クラス名].php`、`002_[クラス名].php`とすると良いです。
 
 ## Author ##
 
