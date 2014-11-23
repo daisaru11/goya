@@ -1,6 +1,6 @@
 {
     "name": "dsaru/goya",
-    "description": "",
+    "description": "Database Schema Diff Tool for Laravel",
     "authors": [
         {
             "name": "daisaru11",
